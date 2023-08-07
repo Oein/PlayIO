@@ -2,10 +2,12 @@ import { Partials } from "discord.js";
 import Octa from "octajs";
 import listeners from "./events";
 
+import { config } from "dotenv";
+config();
+
 new Octa(
   {
-    token:
-      "MTEzMzYyOTgzNzU2Nzg3MzA1Ng.GweO9f.roMieNuE1sFGHkgSXxaD2jkqanI5iLIK5t7hKI",
+    token: process.env.TOKEN!,
   },
   {
     intents: [
