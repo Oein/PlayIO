@@ -7,6 +7,7 @@ const DMRedirecter: EventListener<"messageCreate"> = {
   type: "messageCreate",
   async listener(bot, message) {
     try {
+      if (!message.content) return;
       if (message.guild) return;
       const guild = bot.guilds.cache.find((guild) => guild.id == GUILD_ID);
       if (!guild) return;
@@ -16,26 +17,27 @@ const DMRedirecter: EventListener<"messageCreate"> = {
       if (!channel_) return;
       const channel = channel_ as unknown as TextChannel;
       if (!channel || !channel.send) return;
-      let avURL = message.author.avatarURL({
-        size: 512,
-      });
+
       await channel.send({
         content: "",
         embeds: [
           new EmbedBuilder()
-            .setAuthor({
-              name: nameFromMessage(message as any),
-              ...(avURL ? { iconURL: avURL } : {}),
-            })
+            .setTitle("문의")
             .setColor(COLORS.PRIMARY)
-            .addFields({
-              name: "문의",
-              value: message.content,
-            })
             .setFooter({
-              text: `${message.author.id}`,
+              text: `From. ${nameFromMessage(message as any)}`,
             })
-            .setTimestamp(new Date()),
+            .setTimestamp(new Date())
+            .addFields([
+              {
+                name: "문의 내용",
+                value: message.content,
+              },
+              {
+                name: "User ID",
+                value: message.author.id,
+              },
+            ]),
         ],
       });
     } catch (e) {

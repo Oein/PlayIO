@@ -18,13 +18,22 @@ const AdminResRedirecter: EventListener<"messageCreate"> = {
       let originalMessage = await (
         message.channel as unknown as TextChannel
       ).messages.fetch(reference.messageId);
+
+      // Check Message
       if (!originalMessage) return;
       if (originalMessage.author.id !== bot.user?.id) return;
       if (originalMessage.embeds.length == 0) return;
-      let f = originalMessage.embeds[0].footer?.text;
-      if (!f) return;
-      let useid = f;
-      (await bot.users.createDM(useid)).send({
+
+      // Get User ID
+      let fileds = originalMessage.embeds[0].fields;
+      if (fileds.length < 2) return;
+      let filtedes = fileds.filter((x) => x.name == "User ID");
+      if (filtedes.length == 0) return;
+      let filt = filtedes[0];
+      let userid = filt.value;
+
+      // Send DM
+      (await bot.users.createDM(userid)).send({
         embeds: [
           new EmbedBuilder({
             title: "답변",
