@@ -30,7 +30,7 @@ const AdminResRedirecter: EventListener<"messageCreate"> = {
       let filtedes = fileds.filter((x) => x.name == "User ID");
       if (filtedes.length == 0) return;
       let filt = filtedes[0];
-      let userid = filt.value;
+      let userid = filt.value.replace("<@", "").replace(">", "");
 
       // Send DM
       (await bot.users.createDM(userid)).send({

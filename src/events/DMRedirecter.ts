@@ -35,7 +35,7 @@ const DMRedirecter: EventListener<"messageCreate"> = {
               },
               {
                 name: "User ID",
-                value: message.author.id,
+                value: "<@" + message.author.id + ">",
               },
             ]),
         ],
