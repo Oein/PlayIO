@@ -87,7 +87,7 @@ const ReportCommand: Command = {
     } catch (e) {
       if (!interaction.replied)
         await interaction.reply({
-          content: "신고를 접수하던중 에러가 발생했어요.",
+          content: "해당 멤버는 신고할 수 없어요.",
           ephemeral: true,
         });
     }
